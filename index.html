@@ -45,68 +45,33 @@
     <script>
         const form = document.getElementById('subscribeForm');
         const status = document.getElementById('status');
-        const scriptURL = 'https://unitsi.tsiconsultores.com.br:5678/webhook/93eb9563-83ed-428e-a481-d2dbca14e9fc';
-        
-        // Defina aqui o método suportado pelo Webhook (GET ou POST)
-        const WEBHOOK_METHOD = 'GET'; // Alterar para 'POST' se necessário
-        
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', e => {
             e.preventDefault();
-            
+            const scriptURL = 'https://unitsi.tsiconsultores.com.br:5678/webhook/93eb9563-83ed-428e-a481-d2dbca14e9fc';
             const formData = new FormData(form);
-            const email = formData.get('email');
-        
-            // Exibir status de processamento
             status.style.display = 'block';
             status.style.backgroundColor = '#f8f9fa';
             status.style.color = '#333';
             status.innerHTML = 'Processando sua inscrição...';
-        
-            let requestOptions = {};
-        
-            if (WEBHOOK_METHOD === 'GET') {
-                // Enviar os dados via URL se o Webhook suportar apenas GET
-                const urlWithParams = `${scriptURL}?email=${encodeURIComponent(email)}`;
-                requestOptions = {
-                    method: 'GET'
-                };
-        
-                fetch(urlWithParams, requestOptions)
-                    .then(handleResponse)
-                    .catch(handleError);
-        
-            } else if (WEBHOOK_METHOD === 'POST') {
-                // Enviar os dados no corpo da requisição se o Webhook suportar POST
-                requestOptions = {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email })
-                };
-        
-                fetch(scriptURL, requestOptions)
-                    .then(handleResponse)
-                    .catch(handleError);
-            }
-});
-
-function handleResponse(response) {
-    if (response.ok) {
-        status.style.backgroundColor = '#dff0d8';
-        status.style.color = '#3c763d';
-        status.innerHTML = 'Obrigado por se inscrever! Em breve você receberá nossas novidades.';
-        form.reset();
-    } else {
-        throw new Error('Erro ao enviar os dados.');
-    }
-}
-
-function handleError(error) {
-    status.style.backgroundColor = '#f2dede';
-    status.style.color = '#a94442';
-    status.innerHTML = 'Ops! Algo deu errado. Por favor, tente novamente.';
-    console.error('Erro:', error);
-}
-
+            fetch(scriptURL, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    status.style.backgroundColor = '#dff0d8';
+                    status.style.color = '#3c763d';
+                    status.innerHTML = 'Obrigado por se inscrever! Em breve você receberá nossas novidades.';
+                    form.reset();
+                } else {
+                    throw new Error('Erro ao enviar os dados.');
+                }
+            })
+            .catch(error => {
+                status.style.backgroundColor = '#f2dede';
+                status.style.color = '#a94442';
+                status.innerHTML = 'Ops! Algo deu errado. Por favor, tente novamente.';
+                console.error('Error!', error);
             });
         });
     </script>
