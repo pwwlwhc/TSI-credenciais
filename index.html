@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TSI News - Inscrição</title>
+    <title>TSI News - Cancelar Inscrição</title>
     <style>
         p {
             text-indent: 30px;
@@ -17,42 +17,42 @@
             <h1 style="display: inline-block; color: #A6C710; position: relative; top: 5px; font-size: 32px; font-weight: 600; margin: 0;">TSI News</h1>
         </div>
         <p style="font-size: 16px; color: #333; line-height: 1.8; text-align: justify;">
-            Mantenha-se atualizado com as últimas novidades do setor de transporte, logística e tecnologia. Inscreva-se em nossa newsletter para receber conteúdo exclusivo diretamente em seu e-mail.
+            Lamentamos que você queira sair! Se desejar, você pode cancelar sua inscrição na nossa newsletter preenchendo o campo abaixo.
         </p>
         <div style="max-width: 400px; margin: 30px auto; padding: 20px; background-color: #f9f9f9; border-radius: 8px; border-left: 5px solid #A6C710;">
-            <form id="subscribeForm" style="text-align: center;">
-                <input type="email" name="email" placeholder="Seu melhor e-mail" required
+            <form id="unsubscribeForm" style="text-align: center;">
+                <input type="email" name="email" placeholder="Seu e-mail" required
                      style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; font-size: 16px;">
                 <button type="submit"
                      style="background-color: #A6C710; color: white; padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 10px; width: 100%;">
-                    Inscrever-se
+                    Cancelar Inscrição
                 </button>
             </form>
             <div id="status" style="margin-top: 15px; padding: 10px; text-align: center; display: none; font-size: 14px;"></div>
         </div>
         <div style="text-align: center; margin-top: 20px;">
-            <h3 style="color: #A6C710; font-size: 24px; margin: 0;">Conecte-se com a TSI!</h3>
-            <p style="margin: 10px 0 20px 0; position: relative; left: -15px; font-size: 16px;">
+            <h3 style="color: #A6C710; font-size: 24px; margin: 0;">Ainda queremos manter contato!</h3>
+            <p style="margin: 10px 0 20px 0; font-size: 16px;">
+                Siga-nos nas redes sociais para continuar acompanhando as novidades:
+            </p>
+            <p>
                 <a href="https://www.instagram.com/tsiconsultores/" style="color: #0275d8; text-decoration: none;" target="_blank">Instagram</a> |
                 <a href="https://www.linkedin.com/company/tsiconsultores/?viewAsMember=true" style="color: #0275d8; text-decoration: none;" target="_blank">LinkedIn</a> |
                 <a href="https://www.facebook.com/renatofialhotsiconsultores?locale=pt_BR&_rdc=1&_rdr" style="color: #0275d8; text-decoration: none;" target="_blank">Facebook</a>
             </p>
-            <div>
-                <img src="https://imgur.com/XaHFb42.png" alt="Logo Redes Sociais" style="width: 280px; height: auto; position: relative; top: -25px; margin: 0 auto; display: block;">
-            </div>
         </div>
     </div>
     <script>
-        const form = document.getElementById('subscribeForm');
+        const form = document.getElementById('unsubscribeForm');
         const status = document.getElementById('status');
         form.addEventListener('submit', e => {
             e.preventDefault();
-            const scriptURL = 'https://n8n.tsiconsultores.com.br/webhook/a520bdbe-8870-4611-a319-7349bbdc1b22';
+            const scriptURL = 'https://n8n.tsiconsultores.com.br/webhook/186cb366-24c6-46a5-839e-9bbdede51a4b';
             const formData = new FormData(form);
             status.style.display = 'block';
             status.style.backgroundColor = '#f8f9fa';
             status.style.color = '#333';
-            status.innerHTML = 'Processando sua inscrição...';
+            status.innerHTML = 'Processando sua solicitação...';
             fetch(scriptURL, {
                 method: 'POST',
                 body: formData
@@ -61,10 +61,10 @@
                 if (response.ok) {
                     status.style.backgroundColor = '#dff0d8';
                     status.style.color = '#3c763d';
-                    status.innerHTML = 'Obrigado por se inscrever! Em breve você receberá nossas novidades.';
+                    status.innerHTML = 'Sua inscrição foi cancelada com sucesso. Sentiremos sua falta!';
                     form.reset();
                 } else {
-                    throw new Error('Erro ao enviar os dados.');
+                    throw new Error('Erro ao processar a solicitação.');
                 }
             })
             .catch(error => {
